@@ -1,0 +1,12 @@
+export PATH=~/repo/code42/tools/bin:$PATH                # my tools repo
+export PATH=~/repo/code42/cfg-gen:$PATH                  # cfg-gen
+export PATH=~/repo/iamspaata/bin:$PATH                   # 
+export PATH=~/bin:$PATH                                  # my one-off scripts
+
+alias ls='ls -GFh'
+alias jump="ssh cae-sea.c42 -At"
+alias gpass="openssl rand -base64 16"
+alias dns="dig @ns1.code42.com axfr c42"
+alias jvi="vim -c 'set filetype=junos'"
+alias mtr="sudo mtr -o'LS DABWV'"
+alias q='exit'
