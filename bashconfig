@@ -3,10 +3,32 @@ export PATH=~/repo/code42/cfg-gen:$PATH                  # cfg-gen
 export PATH=~/repo/iamspaata/bin:$PATH                   # 
 export PATH=~/bin:$PATH                                  # my one-off scripts
 
-alias ls='ls -GFh'
-alias jump="ssh cae-sea.c42 -At"
-alias gpass="openssl rand -base64 16"
-alias dns="dig @ns1.code42.com axfr c42"
-alias jvi="vim -c 'set filetype=junos'"
 alias mtr="sudo mtr -o'LS DABWV'"
+alias start-ssh-agent='eval `ssh-agent -s`'
+alias ls='ls -GFh'
+alias gpass="openssl rand -base64 16"
+alias jvi="vim -c 'set filetype=junos-c42' -c 'colorscheme junos-c42'"
+alias jvimdiff="vimdiff -c 'colorscheme junos'"
 alias q='exit'
+
+# Bash function to launch/re-attach a tmux session for use with iterm.
+# The ssh bits update agent forwarding in re-attached tmux session.
+tmux-iterm() {
+  real_sock=$SSH_AUTH_SOCK
+  tmux_sock=$HOME/.ssh/tmux-iterm-ssh-auth-sock
+  ln -sf $real_sock $tmux_sock
+  SSH_AUTH_SOCK=$tmux_sock
+  tmux -CC attach -t iterm || tmux -CC new -s iterm
+  SSH_AUTH_SOCK=$real_sock
+}
+
+# Python Virtual Environments (pyenv - https://github.com/pyenv/pyenv)
+if type -t pyenv > /dev/null; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
+# Ruby Virtual Environments (rbenv - https://github.com/rbenv/rbenv)
+if type -t rbenv > /dev/null; then
+  eval "$(rbenv init -)"
+fi
